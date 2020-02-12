@@ -1,16 +1,21 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
 import './App.css';
-import Ticket from './components/ticket/Ticket';
+import TicketBoard from './components/board/TicketBoard';
+import CreateTicket from './components/createTicket/CreateTicket';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <Ticket></Ticket>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  render() {
+    return (
+      <div className="App">
+        <h1>To-Do Tickets</h1>
+        <header className="App-header">
+        </header>
+        <TicketBoard />
+        <CreateTicket />
+      </div>
+    )
+  }
 }
 
 export default App;
