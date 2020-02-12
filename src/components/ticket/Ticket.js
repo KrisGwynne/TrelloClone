@@ -3,6 +3,9 @@ import './ticket.css';
 
 export default class Ticket extends Component {
     render() {
+
+        const date = new Date(this.props.ticket.dueDate)
+
         return (
             <div className='ticket'>
                 <h2>
@@ -10,6 +13,9 @@ export default class Ticket extends Component {
                 </h2>
                 <p>
                     {this.props.ticket.description}
+                </p>
+                <p>
+                    {date.toDateString()}
                 </p>
             </div>
         );

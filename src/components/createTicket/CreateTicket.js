@@ -1,5 +1,7 @@
 import React,{ Component } from "react";
+import DatePicker from "react-datepicker";
 import './createTicket.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 export default class CreateTicket extends Component {
     constructor(props) {
@@ -7,6 +9,8 @@ export default class CreateTicket extends Component {
         this.state = {
             title: '',
             description: '',
+            date: new Date(),
+            list: this.props.list,
         }
 
         this.handleChange = this.handleChange.bind(this);
@@ -14,12 +18,20 @@ export default class CreateTicket extends Component {
     }
 
     handleChange(e) {
-        const target = e.target;
-        const name = target.name;
+        let name,value;
+        if (e.type) {
+            const target = e.target;
+            name = target.name;
+            value = target.value;
+        } else {
+            value = e;
+            name = 'date'
+        }
 
         this.setState({
-            [name]: target.value,
+            [name]: value,
         })
+
     }
 
     handleSubmit(e) {
@@ -27,13 +39,15 @@ export default class CreateTicket extends Component {
 
         if (this.state.title  === '') {
             console.log('title cannot be blank')
-        }else if (this.state.description === '') {
+        } else if (this.state.description === '') {
             console.log('description cannot be blank')
         } else {
             console.log('submitted')
             const ticket = {
                 title: this.state.title,
-                description: this.state.description
+                description: this.state.description,
+                dueDate: this.state.date,
+                list: this.props.list
             }
             this.submitTicket(ticket)
         }
@@ -70,6 +84,14 @@ export default class CreateTicket extends Component {
                             name='description'
                             type='text'
                             value={this.state.value}
+                            onChange={this.handleChange} />
+                    </label>
+                    <br />
+                    <label>
+                        Due Date: 
+                        <DatePicker
+                            name='date'
+                            selected={this.state.date}
                             onChange={this.handleChange} />
                     </label>
                     <br />

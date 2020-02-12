@@ -1,35 +1,40 @@
 import React,{ Component } from "react";
-import Ticket from '../ticket/Ticket';
+import TicketList from '../list/TicketList';
 
 export default class TicketBoard extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          tickets: null,
+          lists: null,
         }
     }
 
     componentDidMount(props){
-        fetch('http://localhost:9000/FindTickets')
-          .then(res => res.text())
-          .then(res => {
-            this.setState({tickets: JSON.parse(res)})
+        this.getLists();
+    }
+
+
+    getLists() {
+        fetch('http://localhost:9000/FindLists')
+            .then(res => res.text())
+            .then(res => {
+                this.setState({lists: JSON.parse(res)})
         })
     }
 
     render() {
 
-        const numTickets = this.state.tickets? this.state.tickets.length : 0
-        const ticketArray = [];
+        const numLists = this.state.lists? this.state.lists.length : 0
+        const listArray = [];
 
-        for (let i = 0; i < numTickets; i++) {
-            const ticket = this.state.tickets[i];
-            ticketArray.push(<Ticket ticket={ticket} />)
+        for (let i = 0; i < numLists; i++) {
+            const list = this.state.lists[i];
+            listArray.push(<TicketList list={list} />)
         }
 
         return this.state.tickets? (
             <div>
-                {ticketArray}
+                {listArray}
             </div>
         ) : (
             <div>

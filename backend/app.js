@@ -21,57 +21,63 @@ MongoClient.connect(process.env.url, function(err, client) {
     } else {
         console.log("Connected successfully to server");
        
-        const db = client.db('TrelloProjects').collection('Ticket');
+        const db = client.db('TrelloProjects').collection('lists');
 
         app.route('/NewTicket')
             .post((req,res,next) => {
                 const body = req.body;
-                console.log(body.title);
-                if ((body.title || body.description) == null) {
-                    console.log('empty body - no ticket created')
-                } else {
-                    db.insertOne({
-                        title: body.title,
-                        description: body.description,
-                        dueDate: body.dueDate,
-                    }, (err, doc) => {
+
+                console.log(body.list)
+                
+                const ticket = {
+                    title: body.title,
+                    description: body.description,
+                    dueDate: body.dueDate
+                }
+                    
+                db.findOneAndUpdate({list: body.list},
+                    {$push : {tickets: ticket}},
+                    (err,doc) => {
                         if (err) {
-                            console.log('error added new ticket');
+                            console.log('Error')
                             console.log(err);
-                            res.send('Error adding new ticket');
+                        } else if (!doc.lastErrorObject.updatedExisting) {
+                            db.insertOne({
+                                list: body.list,
+                                tickets: [ticket]
+                            },(err, doc) => {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    console.log('added new list and ticket');
+                                    next();
+                                }
+                            })
                         } else {
-                            console.log('added new ticket');
+
+                            console.log('added new ticket to list' + body.list);
                             next();
                         }
-                    })
-                }
-            }, (req,res) => {res.send('Successfully added new ticket')}
+                    }
+                    )
+            },(req,res) => {res.send('Successfully added new ticket')}
         )
 
-        app.route('/FindTickets')
+        app.route('/FindLists')
             .get((req,res) => {
                 db.find({}).toArray((err, tickets) => {
                     if (err) {
-                        console.log('error finding tickets');
+                        console.log('error finding Lists');
                         console.log(err);
                     } else if (tickets){
-                        console.log('found tickets')
+                        console.log('found lists')
                         console.log(tickets);
                         res.send(tickets)
                     } else {
-                        console.log('no tickets found')
+                        console.log('no lists found')
                     }
                 })
             })
-
-        // db.findOne({name: 'test'}, (err,doc) => {
-        //     if (err) {
-        //         console.log('error');
-        //         console.log(err)
-        //     } else {
-        //         console.log(doc);
-        //     }
-        // })
     
         app.get('/', (req, res) => res.send('Hello World!'))
     }
