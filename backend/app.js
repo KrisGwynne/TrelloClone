@@ -26,20 +26,25 @@ MongoClient.connect(process.env.url, function(err, client) {
         app.route('/NewTicket')
             .post((req,res,next) => {
                 const body = req.body;
-                db.insertOne({
-                    title: body.title,
-                    description: body.description,
-                    dueDate: body.dueDate,
-                }, (err, doc) => {
-                    if (err) {
-                        console.log('error added new ticket');
-                        console.log(err);
-                        res.send('Error adding new ticket');
-                    } else {
-                        console.log('added new ticket');
-                        next();
-                    }
-                })
+                console.log(body.title);
+                if ((body.title || body.description) == null) {
+                    console.log('empty body - no ticket created')
+                } else {
+                    db.insertOne({
+                        title: body.title,
+                        description: body.description,
+                        dueDate: body.dueDate,
+                    }, (err, doc) => {
+                        if (err) {
+                            console.log('error added new ticket');
+                            console.log(err);
+                            res.send('Error adding new ticket');
+                        } else {
+                            console.log('added new ticket');
+                            next();
+                        }
+                    })
+                }
             }, (req,res) => {res.send('Successfully added new ticket')}
         )
 

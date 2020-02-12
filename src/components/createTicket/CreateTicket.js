@@ -31,8 +31,24 @@ export default class CreateTicket extends Component {
             console.log('description cannot be blank')
         } else {
             console.log('submitted')
+            const ticket = {
+                title: this.state.title,
+                description: this.state.description
+            }
+            this.submitTicket(ticket)
         }
+    }
 
+    submitTicket(ticket) {
+        fetch('http://localhost:9000/NewTicket',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: JSON.stringify(ticket)
+        })
+        .then(console.log('success'))
+        .catch(err => console.log(err))
     }
 
     render() {
