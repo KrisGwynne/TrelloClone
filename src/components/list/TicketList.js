@@ -34,7 +34,9 @@ export default class TicketList extends Component {
             <div className='ticketList'>
                 <h2>{this.props.title}</h2>
                 <a className='close-list' href='#' onClick={x => this.deleteList()}></a>
+                <div className='ticket-container'>
                 {ticketArray}
+                </div>
                 <CreateTicket list={this.props.title} createTicket={this.props.createTicket}/>
             </div>
         );
