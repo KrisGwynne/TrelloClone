@@ -4,19 +4,19 @@ import './ticket.css';
 export default class Ticket extends Component {
     render() {
 
-        const date = new Date(this.props.ticket.dueDate)
+        // const date = new Date(this.props.ticket.dueDate)
 
         return (
             <div className='ticket'>
-                <h2>
+                <h4>
                     {this.props.ticket.title}
-                </h2>
-                <p>
+                </h4>
+                {/* <p>
                     {this.props.ticket.description}
                 </p>
                 <p>
                     {date.toDateString()}
-                </p>
+                </p> */}
             </div>
         );
     }

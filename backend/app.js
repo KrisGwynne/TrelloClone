@@ -31,8 +31,6 @@ MongoClient.connect(process.env.url, function(err, client) {
                 
                 const ticket = {
                     title: body.title,
-                    description: body.description,
-                    dueDate: body.dueDate
                 }
                     
                 db.findOneAndUpdate({list: body.list},
@@ -41,21 +39,9 @@ MongoClient.connect(process.env.url, function(err, client) {
                         if (err) {
                             console.log('Error')
                             console.log(err);
-                        } else if (!doc.lastErrorObject.updatedExisting) {
-                            db.insertOne({
-                                list: body.list,
-                                tickets: [ticket]
-                            },(err, doc) => {
-                                if (err) {
-                                    console.log(err);
-                                } else {
-                                    console.log('added new list and ticket');
-                                    next();
-                                }
-                            })
+                            throw(err);
                         } else {
-
-                            console.log('added new ticket to list' + body.list);
+                            console.log('added new ticket to list: ' + body.list);
                             next();
                         }
                     }

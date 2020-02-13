@@ -1,21 +1,31 @@
-import React from "react";
+import React, { Component } from "react";
 import Ticket from '../ticket/Ticket';
+import CreateTicket from '../createTicket/CreateTicket';
 import './ticketList.css';
 
-export default function TicketList(props) {
-
-    const tickets = props.list.tickets;
-    const ticketArray = [];
-
-    for (const ticket in tickets) {
-        ticketArray.push(<Ticket ticket={tickets[ticket]} />)
+export default class TicketList extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+        }
     }
 
-    return (
-        <div className='ticketList'>
-            <h2>{props.title}</h2>
-            {ticketArray}
-        </div>
-    );
+
+    render() {
+        const tickets = this.props.list.tickets;
+        const ticketArray = [];
+
+        for (const ticket in tickets) {
+            ticketArray.push(<Ticket ticket={tickets[ticket]} />)
+        }
+
+        return (
+            <div className='ticketList'>
+                <h2>{this.props.title}</h2>
+                {ticketArray}
+                <CreateTicket list={this.props.title} createTicket={this.props.createTicket}/>
+            </div>
+        );
+    }
 }
 

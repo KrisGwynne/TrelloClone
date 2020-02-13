@@ -8,8 +8,8 @@ export default class CreateTicket extends Component {
         super(props);
         this.state = {
             title: '',
-            description: '',
-            date: new Date(),
+            // description: '',
+            // date: new Date(),
             list: this.props.list,
         }
 
@@ -39,62 +39,30 @@ export default class CreateTicket extends Component {
 
         if (this.state.title  === '') {
             console.log('title cannot be blank')
-        } else if (this.state.description === '') {
-            console.log('description cannot be blank')
         } else {
             console.log('submitted')
             const ticket = {
                 title: this.state.title,
-                description: this.state.description,
-                dueDate: this.state.date,
                 list: this.props.list
             }
-            this.submitTicket(ticket)
+            this.props.createTicket(ticket)
+            this.setState({
+                title: '',
+                description: '',
+                date: new Date(),
+            })
         }
-    }
-
-    submitTicket(ticket) {
-        fetch('http://localhost:9000/NewTicket',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(ticket)
-        })
-        .then(console.log('success'))
-        .catch(err => console.log(err))
     }
 
     render() {
         return (
             <div className='createTicket'>
                 <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Title: 
-                        <input
-                            name='title'
-                            type='text'
-                            value={this.state.value}
-                            onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <label>
-                        Description: 
-                        <input
-                            name='description'
-                            type='text'
-                            value={this.state.value}
-                            onChange={this.handleChange} />
-                    </label>
-                    <br />
-                    <label>
-                        Due Date: 
-                        <DatePicker
-                            name='date'
-                            selected={this.state.date}
-                            onChange={this.handleChange} />
-                    </label>
-                    <br />
+                    <input
+                        name='title'
+                        type='text'
+                        value={this.state.title}
+                        onChange={this.handleChange} />
                     <input 
                         type='submit'
                         value='Submit'
@@ -104,3 +72,22 @@ export default class CreateTicket extends Component {
         );
     }
 }
+
+{/* <br />
+<label>
+    Description: 
+    <input
+        name='description'
+        type='text'
+        value={this.state.description}
+        onChange={this.handleChange} />
+</label>
+<br />
+<label>
+    Due Date: 
+    <DatePicker
+        name='date'
+        selected={this.state.date}
+        onChange={this.handleChange} />
+</label>
+<br /> */}

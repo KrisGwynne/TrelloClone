@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import TicketBoard from './components/board/TicketBoard';
-import CreateTicket from './components/createTicket/CreateTicket';
 
 class App extends Component {
 
@@ -12,7 +11,6 @@ class App extends Component {
         <header className="App-header">
         </header>
         <TicketBoard />
-        <CreateTicket />
       </div>
     )
   }

@@ -4,3 +4,8 @@
     border-radius: 3px;
     margin-bottom: 10px;
 }
+
+.ticket h4 {
+    margin: 0px;
+    word-wrap: break-word;
+}
