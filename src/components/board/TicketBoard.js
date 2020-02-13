@@ -47,14 +47,24 @@ export default class TicketBoard extends Component {
         .then(res => this.getLists())
         .catch(err => console.log(err))
     }
+    
+    deleteList(list) {
+        fetch('http://localhost:9000/DeleteList',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: JSON.stringify({list: list})
+        })
+        .then(res => this.getLists())
+        .catch(err => console.log(err))
+    }
 
     deleteTicket(list, ticket) {
         const obj = {
             list: list,
             title: ticket.title
         }
-        console.log(list);
-        console.log(ticket.title)
         fetch('http://localhost:9000/DeleteTicket',{
             method: 'POST',
             headers: {
@@ -77,6 +87,7 @@ export default class TicketBoard extends Component {
                                 list={list}
                                 title={list.list}
                                 createTicket={x => this.createTicket(x)}
+                                deleteList={(list) => this.deleteList(list)}
                                 deleteTicket={(title,ticket) => this.deleteTicket(title,ticket)}
                             />)
         }

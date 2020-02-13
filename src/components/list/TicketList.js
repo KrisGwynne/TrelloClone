@@ -10,10 +10,13 @@ export default class TicketList extends Component {
         }
     }
 
-    deleteTicket(ticket) {
-        this.props.deleteTicket(this.props.title,ticket)
+    deleteList() {
+        this.props.deleteList(this.props.title);
     }
 
+    deleteTicket(ticket) {
+        this.props.deleteTicket(this.props.title,ticket);
+    }
 
     render() {
         const tickets = this.props.list.tickets;
@@ -30,6 +33,7 @@ export default class TicketList extends Component {
         return (
             <div className='ticketList'>
                 <h2>{this.props.title}</h2>
+                <button onClick={x => this.deleteList()}>Delete List</button>
                 {ticketArray}
                 <CreateTicket list={this.props.title} createTicket={this.props.createTicket}/>
             </div>
