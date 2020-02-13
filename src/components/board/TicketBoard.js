@@ -32,7 +32,7 @@ export default class TicketBoard extends Component {
             },
             body: JSON.stringify({list: listName})
         })
-            .then(this.getLists())
+            .then(res => this.getLists())
             .catch(err => console.log(err))
     }
 

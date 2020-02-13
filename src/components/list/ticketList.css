@@ -1,8 +1,32 @@
 .ticketList {
-    min-width: 300px;
+    min-width: 272px;
     background-color: #ebecf0;
     border-radius: 3px;
     display: inline-block;
     margin: 10px;
     padding: 10px;
+    position: relative;
+}
+
+.close-list {
+    width: 20px;
+    height: 2px;
+    display: inline-block;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 16px;
+    margin-top: 20px;
+    transform: rotate(-45deg);
+}
+
+.close-list:before {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    display: inline-block;
+    transform: rotate(90deg);
+    position: absolute;
 }

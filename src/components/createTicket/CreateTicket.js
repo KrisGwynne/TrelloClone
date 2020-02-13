@@ -41,28 +41,34 @@ export default class CreateTicket extends Component {
             console.log('title cannot be blank')
         } else {
             console.log('submitted')
-            const ticket = {
-                title: this.state.title,
-                list: this.props.list
-            }
-            this.props.createTicket(ticket)
-            this.setState({
-                title: '',
-                description: '',
-                date: new Date(),
-            })
+            this.createTicket();
         }
+    }
+
+    createTicket() {
+        const ticket = {
+            title: this.state.title,
+            list: this.props.list
+        }
+        this.props.createTicket(ticket)
+        this.setState({
+            title: '',
+            description: '',
+            date: new Date(),
+        })
     }
 
     render() {
         return (
-            <div className='createTicket'>
-                <form onSubmit={this.handleSubmit}>
+            <div className='createTicket' >
+                <form onSubmit={this.handleSubmit} >
                     <input
                         name='title'
                         type='text'
                         value={this.state.title}
-                        onChange={this.handleChange} />
+                        onChange={this.handleChange}
+                        placeholder='Add another ticket!' 
+                        />
                     <input 
                         type='submit'
                         value='Submit'

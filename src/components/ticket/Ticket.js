@@ -16,7 +16,7 @@ export default class Ticket extends Component {
                 <h4>
                     {this.props.ticket.title}
                 </h4>
-                <button onClick={x => this.deleteTicket()}>Delete Ticket</button>
+                <a href='#' onClick={x => this.deleteTicket()}></a>
             </div>
         );
     }

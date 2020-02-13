@@ -1,11 +1,40 @@
 .ticket {
     padding: 5px;
     background-color: #fff;
+    box-shadow: 0 1px 0 rgba(70, 70, 70, 0.411);
     border-radius: 3px;
     margin-bottom: 10px;
+    position: relative;
+}
+
+.ticket:hover {
+    background-color: #ffffff8c;
 }
 
 .ticket h4 {
     margin: 0px;
     word-wrap: break-word;
+}
+
+.ticket a {
+    width: 10px;
+    height: 2px;
+    display: inline-block;
+    background-color: black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 8px;
+    margin-top: 10px;
+    transform: rotate(-45deg);
+}
+
+.ticket a:before {
+    content: '';
+    width: 100%;
+    height: 2px;
+    background-color: black;
+    display: inline-block;
+    transform: rotate(90deg);
+    position: absolute;
 }
