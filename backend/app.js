@@ -63,6 +63,22 @@ MongoClient.connect(process.env.url, function(err, client) {
             },(req,res) => {res.send('Successfully added new ticket')}
         )
 
+        app.route('/NewList')
+            .post((req,res) => {
+                db.insertOne({
+                    list: req.body.list,
+                    tickets: [],
+                },(err,doc) => {
+                    if (err) {
+                        console.log('error');
+                        console.log(err);
+                    } else {
+                        console.log('added new list');
+                        res.send('Successfully added new list');
+                    }
+                })
+            })
+
         app.route('/FindLists')
             .get((req,res) => {
                 db.find({}).toArray((err, tickets) => {
