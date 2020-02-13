@@ -65,6 +65,18 @@ MongoClient.connect(process.env.url, function(err, client) {
                 })
             })
 
+        app.route('/DeleteTicket')
+            .post((req,res) => {
+                db.update({list: req.body.list}, {$pull: {tickets: {title: req.body.title}}}, (err,doc) => {
+                    if (err) {
+                        console.log('error')
+                        console.log(err);
+                    } else {
+                        res.send('success deleting!');
+                    }
+                })
+            })
+
         app.route('/FindLists')
             .get((req,res) => {
                 db.find({}).toArray((err, tickets) => {

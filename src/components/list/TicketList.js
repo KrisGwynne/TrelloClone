@@ -10,13 +10,21 @@ export default class TicketList extends Component {
         }
     }
 
+    deleteTicket(ticket) {
+        this.props.deleteTicket(this.props.title,ticket)
+    }
+
 
     render() {
         const tickets = this.props.list.tickets;
         const ticketArray = [];
 
         for (const ticket in tickets) {
-            ticketArray.push(<Ticket ticket={tickets[ticket]} />)
+            ticketArray.push(<Ticket
+                                key={tickets[ticket] + ticket}
+                                ticket={tickets[ticket]}
+                                deleteTicket={x => this.deleteTicket(x)} 
+                            />)
         }
 
         return (

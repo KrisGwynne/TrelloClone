@@ -48,13 +48,37 @@ export default class TicketBoard extends Component {
         .catch(err => console.log(err))
     }
 
+    deleteTicket(list, ticket) {
+        const obj = {
+            list: list,
+            title: ticket.title
+        }
+        console.log(list);
+        console.log(ticket.title)
+        fetch('http://localhost:9000/DeleteTicket',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: JSON.stringify(obj)
+        })
+        .then(res => this.getLists())
+        .catch(err => console.log(err))
+    }
+
     render() {
         const numLists = this.state.lists? this.state.lists.length : 0
         const listArray = [];
 
         for (let i = 0; i < numLists; i++) {
             const list = this.state.lists[i];
-            listArray.push(<TicketList list={list} title={list.list} createTicket={x => this.createTicket(x)}/>)
+            listArray.push(<TicketList 
+                                key= {list + i}
+                                list={list}
+                                title={list.list}
+                                createTicket={x => this.createTicket(x)}
+                                deleteTicket={(title,ticket) => this.deleteTicket(title,ticket)}
+                            />)
         }
 
         return this.state.lists? (
