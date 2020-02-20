@@ -5,7 +5,7 @@ import { Draggable } from 'react-beautiful-dnd';
 export default function Ticket(props) {
 
     return (
-        <Draggable draggableId={props.ticket.title} index={parseInt(props.index)}> 
+        <Draggable draggableId={props.ticket.id.toString()} index={parseInt(props.index)}>
             {(provided) => (
             <div className='ticket'
                 {...provided.draggableProps}

@@ -30,6 +30,7 @@ MongoClient.connect(process.env.url, function(err, client) {
                 console.log(body.list)
                 
                 const ticket = {
+                    id: Date.now(),
                     title: body.title,
                 }
                     
@@ -86,7 +87,7 @@ MongoClient.connect(process.env.url, function(err, client) {
 
         app.route('/DeleteTicket')
             .post((req,res) => {
-                db.update({list: req.body.list}, {$pull: {tickets: {title: req.body.title}}}, (err,doc) => {
+                db.update({list: req.body.list}, {$pull: {tickets: {id: req.body.id}}}, (err,doc) => {
                     if (err) {
                         console.log('error')
                         console.log(err);

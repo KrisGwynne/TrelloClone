@@ -65,7 +65,7 @@ export default class TicketBoard extends Component {
     deleteTicket(list, ticket) {
         const obj = {
             list: list,
-            title: ticket.title
+            id: ticket.id
         }
         fetch('http://localhost:9000/DeleteTicket',{
             method: 'POST',
@@ -80,7 +80,7 @@ export default class TicketBoard extends Component {
 
     onDragEnd(result) {
         const { source, destination, draggableId} = result;
-
+        // console.log(result)
         if (!destination) {
             return;
         }
@@ -93,41 +93,49 @@ export default class TicketBoard extends Component {
         }
 
         //Need to move an entry
-        console.log(result)
+        
 
         //First copy the ticket
         let ticket;
         let sourceList;
         let destList;
+        let lists = this.state.lists;
         for (const lst in this.state.lists) {
             if (this.state.lists[lst]._id === source.droppableId){
-                sourceList = this.state.lists[lst]
-                ticket = sourceList.tickets[source.index]
+                ticket = lists[lst].tickets[source.index]
+                lists[lst].tickets.splice(source.index,1)
+                console.log(ticket)
             }
+        }
+        for (const lst in this.state.lists) {
             if (this.state.lists[lst]._id === destination.droppableId){
-                destList = this.state.lists[lst];
+                lists[lst].tickets.splice(destination.index,0,ticket);
             }
         }
-        
-        //Then delete the ticket at particular index
-        this.deleteTicket(sourceList.list,ticket)
 
-        //Insert ticket at specific place
-        const obj = {
-            sourceList: sourceList.list,
-            destList: destList.list,
-            index: destination.index,
-            ticket: ticket
-        }
-        fetch('http://localhost:9000/InsertTicket',{
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json;charset=UTF-8',
-            },
-            body: JSON.stringify(obj)
+        this.setState({
+            lists: lists,
         })
-        .then(res => this.getLists())
-        .catch(err => console.log(err))
+        
+        // //Then delete the ticket at particular index
+        // this.deleteTicket(sourceList.list,ticket)
+
+        // //Insert ticket at specific place
+        // const obj = {
+        //     sourceList: sourceList.list,
+        //     destList: destList.list,
+        //     index: destination.index,
+        //     ticket: ticket
+        // }
+        // fetch('http://localhost:9000/InsertTicket',{
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json;charset=UTF-8',
+        //     },
+        //     body: JSON.stringify(obj)
+        // })
+        // .then(res => this.getLists())
+        // .catch(err => console.log(err))
 
     }
 
@@ -138,7 +146,7 @@ export default class TicketBoard extends Component {
         for (let i = 0; i < numLists; i++) {
             const list = this.state.lists[i];
             listArray.push(<TicketList 
-                                key= {list + i}
+                                key= {i}
                                 list={list}
                                 title={list.list}
                                 createTicket={x => this.createTicket(x)}

@@ -25,7 +25,7 @@ export default class TicketList extends Component {
 
         for (const ticket in tickets) {
             ticketArray.push(<Ticket
-                                key={tickets[ticket] + ticket}
+                                key={tickets[ticket].id}
                                 ticket={tickets[ticket]}
                                 deleteTicket={x => this.deleteTicket(x)} 
                                 index={ticket}
