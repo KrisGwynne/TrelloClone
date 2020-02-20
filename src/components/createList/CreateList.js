@@ -33,7 +33,8 @@ export default class CreateList extends Component {
                         type='text'
                         value={this.state.value}
                         onChange={this.handleChange}
-                        placeholder='Add another list!'/>
+                        placeholder='Add another list!'
+                        autoComplete='off'/>
                     <input type='submit' value='submit' />
                 </form>
             </div>

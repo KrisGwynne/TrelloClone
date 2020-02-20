@@ -2,6 +2,7 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const ObjectID    = require('mongodb').ObjectId;
 require('dotenv').config();
 
 
@@ -124,6 +125,23 @@ MongoClient.connect(process.env.url, function(err, client) {
                     }
                 })
             })
+
+        app.route('/UpdateLists')
+        .post((req,res) => {
+            for (let i = 0; i < req.body.lists.length; i++) {
+
+                let list = req.body.lists[i];
+                list._id = new ObjectID(list._id);
+
+                db.findOneAndReplace({_id: list._id },list,(err,doc) => {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                    }
+                })
+            }
+            res.send('success')
+        })
     
         app.get('/', (req, res) => res.send('Hello World!'))
     }

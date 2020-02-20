@@ -67,7 +67,8 @@ export default class CreateTicket extends Component {
                         type='text'
                         value={this.state.title}
                         onChange={this.handleChange}
-                        placeholder='Add another ticket!' 
+                        placeholder='Add another ticket!'
+                        autoComplete='off'
                         />
                     <input 
                         type='submit'

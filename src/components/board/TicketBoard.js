@@ -78,6 +78,18 @@ export default class TicketBoard extends Component {
         .catch(err => console.log(err))
     }
 
+    updateDatabase(lists) {
+        fetch('http://localhost:9000/UpdateLists',{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=UTF-8',
+            },
+            body: JSON.stringify({lists: lists})
+        })
+        .then(res => this.getLists())
+        .catch(err => console.log(err))
+    }
+
     onDragEnd(result) {
         const { source, destination, draggableId} = result;
         // console.log(result)
@@ -116,6 +128,8 @@ export default class TicketBoard extends Component {
         this.setState({
             lists: lists,
         })
+
+        this.updateDatabase(lists);
         
         // //Then delete the ticket at particular index
         // this.deleteTicket(sourceList.list,ticket)
