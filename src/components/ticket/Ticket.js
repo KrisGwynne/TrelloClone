@@ -1,23 +1,27 @@
 import React,{ Component } from "react";
 import './ticket.css';
+import { Draggable } from 'react-beautiful-dnd';
 
-export default class Ticket extends Component {
+export default function Ticket(props) {
 
-
-    deleteTicket() {
-        this.props.deleteTicket(this.props.ticket)
-    }
-
-
-    render() {
-
-        return (
-            <div className='ticket'>
+    return (
+        <Draggable draggableId={props.ticket.title} index={parseInt(props.index)}> 
+            {(provided) => (
+            <div className='ticket'
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                ref={provided.innerRef}
+            >
                 <h4>
-                    {this.props.ticket.title}
+                    {props.ticket.title}
                 </h4>
-                <a href='#' onClick={x => this.deleteTicket()}></a>
+                <a href='#' onClick={x => deleteTicket(props)}></a>
             </div>
-        );
-    }
+            )}
+        </Draggable>
+    );
+}
+
+function deleteTicket(props) {
+    props.deleteTicket(props.ticket)
 }

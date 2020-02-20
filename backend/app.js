@@ -65,6 +65,25 @@ MongoClient.connect(process.env.url, function(err, client) {
                 })
             })
 
+        app.route('/InsertTicket')
+        .post((req,res,next) => {
+            db.findOneAndUpdate({list: req.body.destList},
+                {$push : {tickets: {
+                    $each: [req.body.ticket],
+                    $position: req.body.index}}},
+                    (err,doc) => {
+                        if (err) {
+                            console.log('Error')
+                            console.log(err);
+                            throw(err);
+                        } else {
+                            console.log('moved ticket to list: ' + req.body.destList);
+                            next();
+                        }
+                    }
+                )},(req,res) => {res.send('Successfully moved ticket')
+        })
+
         app.route('/DeleteTicket')
             .post((req,res) => {
                 db.update({list: req.body.list}, {$pull: {tickets: {title: req.body.title}}}, (err,doc) => {
