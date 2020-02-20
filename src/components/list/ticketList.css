@@ -1,6 +1,6 @@
 .ticketList {
     min-width: 272px;
-    background-color: #ebecf0;
+    background-color: #F6EEEE;
     border-radius: 3px;
     display: inline-block;
     margin: 10px;
@@ -8,10 +8,15 @@
     position: relative;
     
 }
-
+.list-title {
+    padding-left: 5px;
+    padding-bottom: 10px;
+    font-size: 25px;
+}
 .ticket-container {
     overflow-y: scroll;
     max-height: 60vh;
+    min-height: 1px;
     padding-right: 8px;
 }
 .ticket-container::-webkit-scrollbar {

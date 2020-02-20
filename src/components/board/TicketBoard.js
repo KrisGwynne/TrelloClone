@@ -130,26 +130,6 @@ export default class TicketBoard extends Component {
         })
 
         this.updateDatabase(lists);
-        
-        // //Then delete the ticket at particular index
-        // this.deleteTicket(sourceList.list,ticket)
-
-        // //Insert ticket at specific place
-        // const obj = {
-        //     sourceList: sourceList.list,
-        //     destList: destList.list,
-        //     index: destination.index,
-        //     ticket: ticket
-        // }
-        // fetch('http://localhost:9000/InsertTicket',{
-        //     method: 'POST',
-        //     headers: {
-        //         'Content-Type': 'application/json;charset=UTF-8',
-        //     },
-        //     body: JSON.stringify(obj)
-        // })
-        // .then(res => this.getLists())
-        // .catch(err => console.log(err))
 
     }
 

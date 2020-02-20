@@ -1,3 +1,31 @@
 .createTicket {
     margin-top: 10px;
 }
+.title-input {
+    border: none;
+    border-radius: 3px;
+    background-color: #ffffff;
+    padding: 5px;
+}
+.create-ticket-link {
+    display: flex;
+    border-radius: 3px;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+}
+.create-ticket-link:hover {
+    background-color: #e2d9d99d;  
+}
+.create-ticket-link img {
+    height: 13px;
+    margin: 5px;
+}
+.create-ticket-link p {
+    color: #5a5a5f;
+}
+
+

@@ -1,6 +1,6 @@
 .ticket {
     padding: 5px;
-    background-color: #fff;
+    background-color: #ffffff;
     box-shadow: 0 1px 0 rgba(70, 70, 70, 0.411);
     border-radius: 3px;
     margin-bottom: 10px;
@@ -17,6 +17,14 @@
 }
 
 .ticket a {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 5px;
+}
+
+/* .ticket a {
     width: 10px;
     height: 2px;
     display: inline-block;
@@ -37,4 +45,4 @@
     display: inline-block;
     transform: rotate(90deg);
     position: absolute;
-}
+} */

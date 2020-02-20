@@ -1,6 +1,7 @@
 import React,{ Component } from "react";
 import './ticket.css';
 import { Draggable } from 'react-beautiful-dnd';
+import deleteSVG from '../../delete.svg';
 
 export default function Ticket(props) {
 
@@ -12,10 +13,10 @@ export default function Ticket(props) {
                 {...provided.dragHandleProps}
                 ref={provided.innerRef}
             >
-                <h4>
+                <p>
                     {props.ticket.title}
-                </h4>
-                <a href='#' onClick={x => deleteTicket(props)}></a>
+                </p>
+                <a href='#' onClick={x => deleteTicket(props)}><img src={deleteSVG} /></a>
             </div>
             )}
         </Draggable>

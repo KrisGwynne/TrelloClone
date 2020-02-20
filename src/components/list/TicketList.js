@@ -34,7 +34,7 @@ export default class TicketList extends Component {
 
         return (
                 <div className='ticketList'>
-                    <h2>{this.props.title}</h2>
+                    <h4 className='list-title'>{this.props.title}</h4>
                     <a className='close-list' href='#' onClick={x => this.deleteList()}></a>
                         <Droppable droppableId={this.props.list._id}>
                             {(provided) => (
