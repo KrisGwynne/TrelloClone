@@ -2,7 +2,7 @@ import React,{ Component } from "react";
 import TicketList from '../list/TicketList';
 import './ticketBoard.css';
 import CreateList from "../createList/CreateList";
-import { DragDropContext } from "react-beautiful-dnd";
+import { DragDropContext, Droppable } from "react-beautiful-dnd";
 
 export default class TicketBoard extends Component {
     constructor(props) {
@@ -22,7 +22,16 @@ export default class TicketBoard extends Component {
         fetch('http://localhost:9000/FindLists')
             .then(res => res.text())
             .then(res => {
-                this.setState({lists: JSON.parse(res)})
+                const lists = JSON.parse(res);
+
+                for (let i = 0; i < lists.length; i++) {
+                    const list = lists[i];
+                    lists.splice(i,1);
+                    lists.splice(list.index,0,list)
+                }
+                console.log(lists);
+
+                this.setState({lists: lists})
         })
     }
 
@@ -91,7 +100,7 @@ export default class TicketBoard extends Component {
     }
 
     onDragEnd(result) {
-        const { source, destination, draggableId} = result;
+        const { source, destination, draggableId, type} = result;
         // console.log(result)
         if (!destination) {
             return;
@@ -104,27 +113,39 @@ export default class TicketBoard extends Component {
                 return;
         }
 
+        let lists = this.state.lists;
+
+        if (type === 'column') {
+            const list = lists[source.index];
+            list.index = destination.index;
+            lists.splice(source.index,1);
+            lists.splice(destination.index,0,list)
+        }
+
         //Need to move an entry
         
 
         //First copy the ticket
-        let ticket;
-        let sourceList;
-        let destList;
-        let lists = this.state.lists;
-        for (const lst in this.state.lists) {
-            if (this.state.lists[lst]._id === source.droppableId){
-                ticket = lists[lst].tickets[source.index]
-                lists[lst].tickets.splice(source.index,1)
-                console.log(ticket)
+        if (type === 'task') {
+            console.log('here')
+            let ticket;
+            let sourceList;
+            let destList;
+            for (const lst in this.state.lists) {
+                if (this.state.lists[lst]._id === source.droppableId){
+                    ticket = lists[lst].tickets[source.index]
+                    lists[lst].tickets.splice(source.index,1)
+                    console.log(ticket)
+                }
             }
-        }
-        for (const lst in this.state.lists) {
-            if (this.state.lists[lst]._id === destination.droppableId){
-                lists[lst].tickets.splice(destination.index,0,ticket);
+            for (const lst in this.state.lists) {
+                if (this.state.lists[lst]._id === destination.droppableId){
+                    lists[lst].tickets.splice(destination.index,0,ticket);
+                }
             }
         }
 
+        console.log(lists.slice())
         this.setState({
             lists: lists,
         })
@@ -140,7 +161,8 @@ export default class TicketBoard extends Component {
         for (let i = 0; i < numLists; i++) {
             const list = this.state.lists[i];
             listArray.push(<TicketList 
-                                key= {i}
+                                key= {list._id}
+                                index={i}
                                 list={list}
                                 title={list.list}
                                 createTicket={x => this.createTicket(x)}
@@ -151,10 +173,17 @@ export default class TicketBoard extends Component {
 
         return this.state.lists? (
             <DragDropContext onDragEnd={this.onDragEnd}>
-                <div className='ticket-board'>
-                    {listArray}
-                    <CreateList createList={x => this.createList(x)} />
-                </div>
+                    <Droppable droppableId={'12ef4'} direction='horizontal' type='column'>
+                    {(provided) => (
+                        <div className='ticket-board'
+                            ref={provided.innerRef}
+                            {...provided.droppableProps}>
+                            {listArray}
+                            {provided.placeholder}
+                            <CreateList createList={x => this.createList(x)} />
+                        </div>
+                    )}
+                    </Droppable>
             </DragDropContext>
         ) : (
             <div>

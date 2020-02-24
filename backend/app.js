@@ -54,6 +54,7 @@ MongoClient.connect(process.env.url, function(err, client) {
         app.route('/NewList')
             .post((req,res) => {
                 db.insertOne({
+                    id: Date.now(),
                     list: req.body.list,
                     tickets: [],
                 },(err,doc) => {
@@ -113,11 +114,13 @@ MongoClient.connect(process.env.url, function(err, client) {
 
                 let list = req.body.lists[i];
                 list._id = new ObjectID(list._id);
+                list.index = i;
 
                 db.findOneAndReplace({_id: list._id },list,(err,doc) => {
                     if (err) {
                         console.log(err);
                     } else {
+                        console.log(list)
                     }
                 })
             }
