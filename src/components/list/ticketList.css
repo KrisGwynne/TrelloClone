@@ -6,7 +6,6 @@
     margin: 10px;
     padding: 10px;
     position: relative;
-    
 }
 .list-title {
     padding-left: 5px;
@@ -15,7 +14,7 @@
 }
 .ticket-container {
     overflow-y: scroll;
-    max-height: 60vh;
+    max-height: 70vh;
     min-height: 1px;
     padding-right: 8px;
 }

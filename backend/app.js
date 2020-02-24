@@ -54,9 +54,9 @@ MongoClient.connect(process.env.url, function(err, client) {
         app.route('/NewList')
             .post((req,res) => {
                 db.insertOne({
-                    id: Date.now(),
                     list: req.body.list,
                     tickets: [],
+                    index: req.body.index
                 },(err,doc) => {
                     if (err) {
                         console.log('error');

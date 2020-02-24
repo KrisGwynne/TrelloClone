@@ -29,7 +29,6 @@ export default class TicketBoard extends Component {
                     lists.splice(i,1);
                     lists.splice(list.index,0,list)
                 }
-                console.log(lists);
 
                 this.setState({lists: lists})
         })
@@ -41,7 +40,10 @@ export default class TicketBoard extends Component {
             headers: {
                 'Content-Type': 'application/json;charset=UTF-8',
             },
-            body: JSON.stringify({list: listName})
+            body: JSON.stringify({
+                list: listName,
+                index: this.state.lists.length
+            })
         })
             .then(res => this.getLists())
             .catch(err => console.log(err))
@@ -100,8 +102,7 @@ export default class TicketBoard extends Component {
     }
 
     onDragEnd(result) {
-        const { source, destination, draggableId, type} = result;
-        // console.log(result)
+        const { source, destination, type} = result;
         if (!destination) {
             return;
         }
@@ -129,8 +130,6 @@ export default class TicketBoard extends Component {
         if (type === 'task') {
             console.log('here')
             let ticket;
-            let sourceList;
-            let destList;
             for (const lst in this.state.lists) {
                 if (this.state.lists[lst]._id === source.droppableId){
                     ticket = lists[lst].tickets[source.index]

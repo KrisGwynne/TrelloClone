@@ -18,10 +18,12 @@ export default class CreateList extends Component {
 
     handleSubmit(e) {
         e.preventDefault();
-        this.props.createList(this.state.value);
-        this.setState({
-            value: '',
-        })
+        if (this.state.value !== '') {
+            this.props.createList(this.state.value);
+            this.setState({
+                value: '',
+            })
+        }
     }
 
 
